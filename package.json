@@ -43,7 +43,8 @@
 		"dev": "tsx watch --env-file=.env --conditions=development tests",
 		"lint": "lintroll --cache .",
 		"type-check": "tsc --noEmit",
-		"prepack": "pnpm build && clean-pkg-json"
+		"prepack": "pnpm build && clean-pkg-json",
+		"prepare": "skills-npm"
 	},
 	"dependencies": {
 		"esbuild": "^0.27.1",
@@ -65,10 +66,11 @@
 		"execa": "^8.0.1",
 		"fs-fixture": "^2.11.0",
 		"lintroll": "^1.20.1",
-		"manten": "^1.5.0",
+		"manten": "^2.0.0",
 		"memfs": "^4.48.1",
 		"mini-css-extract-plugin": "^1.6.2",
 		"pkgroll": "^2.17.0",
+		"skills-npm": "^1.0.0",
 		"tsx": "^4.20.6",
 		"typescript": "^5.9.3",
 		"webpack": "^4.47.0",

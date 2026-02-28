@@ -1,4 +1,4 @@
-import { testSuite, expect } from 'manten';
+import { describe, test, expect } from 'manten';
 import { build } from 'webpack-test-utils';
 import type webpack4 from 'webpack';
 import type webpack5 from 'webpack5';
@@ -12,9 +12,9 @@ import type { EsbuildPluginOptions } from '#esbuild-loader';
 
 const { exportFile } = fixtures;
 
-export default testSuite(({ describe }, webpack: typeof webpack4 | typeof webpack5) => {
-	describe('Loader', ({ test, describe }) => {
-		describe('Error handling', ({ test }) => {
+export const loader = (webpack: typeof webpack4 | typeof webpack5) => {
+	describe('Loader', () => {
+		describe('Error handling', () => {
 			test('tsx fails to be parsed as ts', async () => {
 				const built = await build(
 					exportFile(
@@ -142,7 +142,7 @@ export default testSuite(({ describe }, webpack: typeof webpack4 | typeof webpac
 			expect(built.require('/dist/index.js')).toStrictEqual(['div', null, 'hello world']);
 		});
 
-		describe('implementation', ({ test }) => {
+		describe('implementation', () => {
 			test('error', async () => {
 				const runWithImplementation = async (
 					implementation: EsbuildPluginOptions['implementation'],
@@ -289,7 +289,7 @@ export default testSuite(({ describe }, webpack: typeof webpack4 | typeof webpac
 			});
 		});
 
-		describe('Source-map', ({ test }) => {
+		describe('Source-map', () => {
 			test('source-map eval', async () => {
 				const built = await build(
 					fixtures.js,
@@ -507,4 +507,4 @@ export default testSuite(({ describe }, webpack: typeof webpack4 | typeof webpac
 			expect(built.require('/dist')).toBe('works-with-eval');
 		});
 	});
-});
+};

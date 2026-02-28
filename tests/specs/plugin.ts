@@ -1,4 +1,4 @@
-import { testSuite, expect } from 'manten';
+import { describe, test, expect } from 'manten';
 import { build } from 'webpack-test-utils';
 import type webpack4 from 'webpack';
 import webpack5 from 'webpack5';
@@ -21,12 +21,12 @@ const assertMinified = (code: string) => {
 
 const countIife = (code: string) => Array.from(code.matchAll(/\(\(\)=>\{/g)).length;
 
-export default testSuite(({ describe }, webpack: typeof webpack4 | typeof webpack5) => {
+export const plugin = (webpack: typeof webpack4 | typeof webpack5) => {
 	const webpackIs4 = isWebpack4(webpack);
 
-	describe('Plugin', ({ test, describe }) => {
-		describe('Minify JS', ({ test, describe }) => {
-			describe('should not minify by default', ({ test }) => {
+	describe('Plugin', () => {
+		describe('Minify JS', () => {
+			describe('should not minify by default', () => {
 				test('minimizer', async () => {
 					const built = await build(
 						fixtures.minification,
@@ -229,7 +229,7 @@ export default testSuite(({ describe }, webpack: typeof webpack4 | typeof webpac
 				expect(chunkBaz).toContain('__webpack_require__');
 			});
 
-			describe('devtool', ({ test }) => {
+			describe('devtool', () => {
 				test('minify w/ no devtool', async () => {
 					const built = await build(
 						fixtures.blank,
@@ -382,7 +382,7 @@ export default testSuite(({ describe }, webpack: typeof webpack4 | typeof webpac
 				expect(file).toMatch('?foo=bar');
 			});
 
-			describe('legalComments', ({ test }) => {
+			describe('legalComments', () => {
 				test('minify w/ legalComments - default is inline', async () => {
 					const builtDefault = await build(
 						fixtures.legalComments,
@@ -472,7 +472,7 @@ export default testSuite(({ describe }, webpack: typeof webpack4 | typeof webpac
 			});
 		});
 
-		describe('implementation', ({ test }) => {
+		describe('implementation', () => {
 			test('error', async () => {
 				const runWithImplementation = async (implementation: EsbuildPluginOptions['implementation']) => {
 					await build(
@@ -548,7 +548,7 @@ export default testSuite(({ describe }, webpack: typeof webpack4 | typeof webpac
 			});
 		});
 
-		describe('CSS', ({ test }) => {
+		describe('CSS', () => {
 			test('minify CSS asset', async () => {
 				const built = await build(
 					fixtures.css,
@@ -652,7 +652,7 @@ export default testSuite(({ describe }, webpack: typeof webpack4 | typeof webpac
 			).toBe('console.log(2);\n');
 		});
 
-		describe('minify targets', ({ test }) => {
+		describe('minify targets', () => {
 			test('no iife for node', async () => {
 				const built = await build(
 					fixtures.getHelpers,
@@ -857,4 +857,4 @@ export default testSuite(({ describe }, webpack: typeof webpack4 | typeof webpac
 			expect(built.stats.hasErrors()).toBe(false);
 		});
 	});
-});
+};
